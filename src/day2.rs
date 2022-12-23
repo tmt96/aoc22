@@ -136,19 +136,21 @@ impl Solver for Problem {
 mod tests {
     use super::*;
 
+    const INPUT: &str = "A Y
+B X
+C Z";
+
     #[test]
     fn test_first() {
-        let raw_input = "";
         let problem = Problem {};
-        let input = problem.parse_input(raw_input.as_bytes());
-        assert_eq!(problem.solve_first(&input), 0);
+        let input = problem.parse_input(INPUT.as_bytes());
+        assert_eq!(problem.solve_first(&input), 15);
     }
 
     #[test]
     fn test_second() {
-        let raw_input = "";
         let problem = Problem {};
-        let input = problem.parse_input(raw_input.as_bytes());
-        assert_eq!(problem.solve_second(&input), 0);
+        let input = problem.parse_input(INPUT.as_bytes());
+        assert_eq!(problem.solve_second(&input), 12);
     }
 }

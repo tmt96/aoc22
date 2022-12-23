@@ -62,19 +62,24 @@ impl Solver for Problem {
 mod tests {
     use super::*;
 
+    const INPUT: &str = "2-4,6-8
+2-3,4-5
+5-7,7-9
+2-8,3-7
+6-6,4-6
+2-6,4-8";
+
     #[test]
     fn test_first() {
-        let raw_input = "";
         let problem = Problem {};
-        let input = problem.parse_input(raw_input.as_bytes());
-        assert_eq!(problem.solve_first(&input), 0);
+        let input = problem.parse_input(INPUT.as_bytes());
+        assert_eq!(problem.solve_first(&input), 2);
     }
 
     #[test]
     fn test_second() {
-        let raw_input = "";
         let problem = Problem {};
-        let input = problem.parse_input(raw_input.as_bytes());
-        assert_eq!(problem.solve_second(&input), 0);
+        let input = problem.parse_input(INPUT.as_bytes());
+        assert_eq!(problem.solve_second(&input), 4);
     }
 }

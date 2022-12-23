@@ -36,19 +36,32 @@ impl Solver for Problem {
 mod tests {
     use super::*;
 
+    const INPUT: &str = "1000
+2000
+3000
+
+4000
+
+5000
+6000
+
+7000
+8000
+9000
+
+10000";
+
     #[test]
     fn test_first() {
-        let raw_input = "";
         let problem = Problem {};
-        let input = problem.parse_input(raw_input.as_bytes());
-        assert_eq!(problem.solve_first(&input), 0);
+        let input = problem.parse_input(INPUT.as_bytes());
+        assert_eq!(problem.solve_first(&input), 24000);
     }
 
     #[test]
     fn test_second() {
-        let raw_input = "";
         let problem = Problem {};
-        let input = problem.parse_input(raw_input.as_bytes());
-        assert_eq!(problem.solve_second(&input), 0);
+        let input = problem.parse_input(INPUT.as_bytes());
+        assert_eq!(problem.solve_second(&input), 45000);
     }
 }
