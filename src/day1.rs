@@ -1,28 +1,34 @@
 use crate::solver::Solver;
-use std::io::{self, BufRead, BufReader};
+use std::collections::BinaryHeap;
+use std::io::{self, BufReader, Read};
 
 pub struct Problem;
 
 impl Solver for Problem {
-    type Input = Vec<i32>;
-    type Output1 = i32;
-    type Output2 = i32;
+    type Input = Vec<i64>;
+    type Output1 = i64;
+    type Output2 = i64;
 
     fn get_day(&self) -> i32 {
         1
     }
 
     fn parse_input<R: io::Read>(&self, r: R) -> Self::Input {
-        let r = BufReader::new(r);
-        vec![0]
+        let mut r = BufReader::new(r);
+        let mut buf = String::new();
+        let _ = r.read_to_string(&mut buf);
+        buf.split("\n\n")
+            .map(|s| s.split('\n').flat_map(|s| s.parse::<i64>()).sum::<i64>())
+            .collect()
     }
 
     fn solve_first(&self, input: &Self::Input) -> Self::Output1 {
-        0
+        *input.iter().max().unwrap()
     }
 
     fn solve_second(&self, input: &Self::Input) -> Self::Output2 {
-        0
+        let mut heap = input.iter().collect::<BinaryHeap<_>>();
+        (0..3).map(|_| heap.pop().unwrap()).sum::<Self::Output2>()
     }
 }
 

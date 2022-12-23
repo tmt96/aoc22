@@ -1,7 +1,11 @@
+use solver::Solver;
+
+mod day1;
 mod solver;
 
 fn solve_day(day: i32) {
     match day {
+        1 => day1::Problem {}.solve(),
         d => println!("Day {} hasn't been solved yet :(", d),
     }
 }
