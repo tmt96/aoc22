@@ -8,7 +8,7 @@ impl Solver for Problem {
     type Output1 = i64;
     type Output2 = i64;
 
-    fn get_day(&self) -> usize {
+    fn get_day(&self) -> i32 {
         1
     }
 

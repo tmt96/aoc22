@@ -5,6 +5,7 @@ mod day2;
 mod day3;
 mod day4;
 mod day5;
+mod day6;
 mod solver;
 
 fn solve_day(day: i32) {
@@ -14,6 +15,7 @@ fn solve_day(day: i32) {
         3 => day3::Problem {}.solve(),
         4 => day4::Problem {}.solve(),
         5 => day5::Problem {}.solve(),
+        6 => day6::Problem {}.solve(),
         d => println!("Day {} hasn't been solved yet :(", d),
     }
 }
