@@ -110,26 +110,6 @@ impl Solver for Problem {
     fn solve_second(&self, input: &Self::Input) -> Self::Output2 {
         input.iter().map(|round| round.score_pt2()).sum::<i64>()
     }
-
-    fn input_file(&self) -> String {
-        format!("input/day{:02}", self.get_day())
-    }
-
-    fn load_input<P: AsRef<std::path::Path>>(&self, p: P) -> io::Result<Self::Input> {
-        let f = std::fs::File::open(p)?;
-        Ok(self.parse_input(f))
-    }
-
-    fn solve(&self) {
-        let input_file = self.input_file();
-        let input = self
-            .load_input(input_file)
-            .expect("unable to open input file");
-        let s1 = self.solve_first(&input);
-        let s2 = self.solve_second(&input);
-        println!("Solution 1: {}", s1);
-        println!("Solution 2: {}", s2);
-    }
 }
 
 #[cfg(test)]

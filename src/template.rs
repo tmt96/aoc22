@@ -4,11 +4,11 @@ use std::io::{self, BufRead, BufReader};
 pub struct Problem;
 
 impl Solver for Problem {
-    type Input = Vec<i32>;
-    type Output1 = i32;
-    type Output2 = i32;
+    type Input = Vec<i64>;
+    type Output1 = i64;
+    type Output2 = i64;
 
-    fn get_day(&self) -> i32 {
+    fn get_day(&self) -> usize {
         1
     }
 
@@ -30,19 +30,19 @@ impl Solver for Problem {
 mod tests {
     use super::*;
 
+    const INPUT: &str = "";
+
     #[test]
     fn test_first() {
-        let raw_input = "";
         let problem = Problem {};
-        let input = problem.parse_input(raw_input.as_bytes());
+        let input = problem.parse_input(INPUT.as_bytes());
         assert_eq!(problem.solve_first(&input), 0);
     }
 
     #[test]
     fn test_second() {
-        let raw_input = "";
         let problem = Problem {};
-        let input = problem.parse_input(raw_input.as_bytes());
+        let input = problem.parse_input(INPUT.as_bytes());
         assert_eq!(problem.solve_second(&input), 0);
     }
 }
