@@ -33,8 +33,8 @@ impl Dir {
         self.dirs.insert(name.to_owned(), index);
     }
 
-    fn get_dir(&self, name: &str) -> Option<&usize> {
-        self.dirs.get(name)
+    fn get_dir(&self, name: &str) -> usize {
+        self.dirs[name]
     }
 }
 
@@ -62,8 +62,8 @@ impl Arena {
     }
 
     fn move_to_child(&mut self, name: &str) {
-        let child = self.dirs[self.cur_node].get_dir(name).unwrap();
-        self.cur_node = *child;
+        let child = self.dirs[self.cur_node].get_dir(name);
+        self.cur_node = child;
     }
 
     fn add_file(&mut self, name: &str, size: usize) {
@@ -116,7 +116,7 @@ impl Solver for Problem {
                         name => dir_tree.move_to_child(name),
                     }
                 }
-                // nothing to do yet for ls
+                // nothing to do yet for ls command
             } else if line[0] == "dir" {
                 dir_tree.add_dir(line[1]);
             } else {
