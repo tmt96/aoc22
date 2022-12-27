@@ -15,26 +15,12 @@ impl Op {
             _ => panic!("Unexpected op"),
         }
     }
-
-    fn operate(&self, x: i64) -> i64 {
-        match self {
-            Op::Noop => x,
-            Op::Add(i) => x + i,
-        }
-    }
-
-    fn cycles(&self) -> i64 {
-        match self {
-            Op::Noop => 1,
-            Op::Add(i) => 2,
-        }
-    }
 }
 
 pub struct Problem;
 
 impl Solver for Problem {
-    type Input = Vec<Op>;
+    type Input = Vec<i64>;
     type Output1 = i64;
     type Output2 = String;
 
@@ -44,45 +30,45 @@ impl Solver for Problem {
 
     fn parse_input<R: io::Read>(&self, r: R) -> Self::Input {
         let r = BufReader::new(r);
-        r.lines().flatten().map(|s| Op::from_str(&s)).collect()
+        r.lines()
+            .flatten()
+            .map(|s| Op::from_str(&s))
+            .flat_map(|op| match op {
+                Op::Noop => vec![0],
+                Op::Add(i) => vec![0, i],
+            })
+            .scan(1, |state, val| {
+                let temp = *state;
+                *state += val;
+                Some(temp)
+            })
+            .collect()
     }
 
     fn solve_first(&self, input: &Self::Input) -> Self::Output1 {
-        let (mut cycles, mut x, mut val, mut milestone) = (1, 1, 0, 20);
-        for op in input.iter() {
-            if cycles > 220 {
-                break;
-            }
-            cycles += op.cycles();
-            if cycles > milestone {
-                val += milestone * x;
-                milestone += 40;
-            }
-            x = op.operate(x);
-        }
-
-        val
+        (0..6)
+            .map(|i| i * 40 + 20)
+            .map(|i| (i as i64) * input[i - 1])
+            .sum()
     }
 
     fn solve_second(&self, input: &Self::Input) -> Self::Output2 {
-        let mut res = vec![];
-
-        let (mut cycles, mut x) = (0, 1);
-        for op in input.iter() {
-            for i in 0..op.cycles() {
-                if (x - (cycles + i) % 40).abs() <= 1 {
-                    res.push('#')
-                } else {
-                    res.push('.')
-                }
-            }
-            cycles += op.cycles();
-            x = op.operate(x);
-        }
-
-        res.chunks(40)
+        input
+            .chunks(40)
             .take(6)
-            .map(|chunk| chunk.iter().collect::<String>())
+            .map(|chunk| {
+                chunk
+                    .iter()
+                    .enumerate()
+                    .map(|(i, val)| {
+                        if (val - (i as i64)).abs() <= 1 {
+                            '#'
+                        } else {
+                            '.'
+                        }
+                    })
+                    .collect::<String>()
+            })
             .collect::<Vec<_>>()
             .join("\n")
     }
