@@ -37,7 +37,7 @@ pub trait Solver {
             .expect("unable to open input file");
         let s1 = self.solve_first(&input);
         let s2 = self.solve_second(&input);
-        println!("Solution 1: {}", s1);
-        println!("Solution 2: {}", s2);
+        println!("Solution 1: \n{}", s1);
+        println!("Solution 2: \n{}", s2);
     }
 }

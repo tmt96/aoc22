@@ -87,7 +87,6 @@ impl Solver for Problem {
 
                         left == x || right == width - x - 1 || up == *y || down == height - y - 1
                     })
-                    // .inspect(|y| println!("{x} {y}"))
                     .count()
             })
             .sum()
