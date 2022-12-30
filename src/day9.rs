@@ -36,6 +36,15 @@ impl Vec2D {
     }
 }
 
+type Vec2DIterator = Box<dyn Iterator<Item = Vec2D>>;
+
+fn follow(v: Vec2DIterator) -> Vec2DIterator {
+    Box::new(v.scan(Vec2D::default(), |state, el| {
+        *state = state.follow(&el);
+        Some(*state)
+    }))
+}
+
 pub struct Problem;
 
 impl Solver for Problem {
@@ -70,26 +79,18 @@ impl Solver for Problem {
     }
 
     fn solve_first(&self, input: &Self::Input) -> Self::Output1 {
-        let v: Box<dyn Iterator<Item = Vec2D>> = Box::new(input.clone().into_iter());
+        let v: Vec2DIterator = Box::new(input.clone().into_iter());
         follow(v).collect::<HashSet<_>>().len()
     }
 
     fn solve_second(&self, input: &Self::Input) -> Self::Output2 {
-        let mut v: Box<dyn Iterator<Item = Vec2D>> = Box::new(input.clone().into_iter());
+        let mut v: Vec2DIterator = Box::new(input.clone().into_iter());
         for _ in 0..9 {
-            let temp = follow(v);
-            v = temp;
+            v = follow(v);
         }
 
         v.collect::<HashSet<_>>().len()
     }
-}
-
-fn follow(v: Box<dyn Iterator<Item = Vec2D>>) -> Box<dyn Iterator<Item = Vec2D>> {
-    Box::new(v.scan(Vec2D::default(), |state, el| {
-        *state = state.follow(&el);
-        Some(*state)
-    }))
 }
 
 #[cfg(test)]
